@@ -1,3 +1,5 @@
+require_relative 'block_group'
+
 class BlockModel
   attr_reader :blocks
 
@@ -34,20 +36,15 @@ class BlockModel
 
   def reblock_neighbour_blocks(first_block_x_index, first_block_y_index, first_block_z_index,
     reblock_factor_x, reblock_factor_y, reblock_factor_z)
-    new_block = {}
+    group = []
     for r_x in (first_block_x_index..(first_block_x_index + reblock_factor_x-1))
       for r_y in (first_block_y_index..(first_block_y_index +reblock_factor_y-1))
         for r_z in (first_block_z_index..(first_block_z_index + reblock_factor_z-1))
-          @blocks[r_x][r_y][r_z].each do |key, value|
-            unless new_block.include? key
-              new_block[key] = 0
-            end
-            new_block[key] += value
-          end
+          group << @blocks[r_x][r_y][r_z]
         end
       end
     end
-    new_block
+    group.length == 1 ? group.first : BlockGroup.new(group)
   end
 
   def initialize_empty_blocks(number_of_x_blocks, number_of_y_blocks, number_of_z_blocks)
@@ -57,7 +54,7 @@ class BlockModel
       for j in (0..number_of_y_blocks - 1)
         new_blocks[i][j] = []
         for k in (0..number_of_z_blocks - 1)
-          new_blocks[i][j][k] = {}
+          new_blocks[i][j][k] = nil
         end
       end
     end

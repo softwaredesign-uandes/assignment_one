@@ -1,4 +1,6 @@
 require_relative 'block_model'
+require_relative 'block'
+require_relative 'block_group'
 
 RSpec.describe BlockModel do
   let(:block_model) { BlockModel.new(blocks) }
@@ -14,7 +16,7 @@ RSpec.describe BlockModel do
     end
 
     context "when blocks model has on block" do
-      let(:blocks) { [ [ [ { mass: 12.0 } ] ] ] }
+      let(:blocks) { [ [ [ Block.new({ mass: 12.0 }) ] ] ] }
 
       it "reblocked model has one block, when rx=ry=rz=1" do
         block_model.reblock(1, 1, 1)
@@ -26,12 +28,12 @@ RSpec.describe BlockModel do
       let(:blocks) do
         [
           [
-            [{mass: 1}, {mass: 1}],
-            [{mass: 1}, {mass: 1}],
+            [Block.new({mass: 1}), Block.new({mass: 1})],
+            [Block.new({mass: 1}), Block.new({mass: 1})],
           ],
           [
-            [{mass: 1}, {mass: 1}],
-            [{mass: 1}, {mass: 1}],
+            [Block.new({mass: 1}), Block.new({mass: 1})],
+            [Block.new({mass: 1}), Block.new({mass: 1})],
           ]
         ]
       end
@@ -44,11 +46,11 @@ RSpec.describe BlockModel do
       end
 
       context "when rx=ry=rz=2" do
-        let(:expected_blocks) { [[[{ mass:8 }]]] }
+        let(:expected_blocks) { [[[BlockGroup.new(blocks)]]] }
 
         it "reblocked model has original blocks" do
           block_model.reblock(2, 2, 2)
-          expect(block_model.blocks).to eq expected_blocks
+          expect(block_model.blocks.length).to be 1
         end
       end
     end
