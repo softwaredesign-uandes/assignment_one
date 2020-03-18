@@ -14,9 +14,29 @@ RSpec.describe BlockModel do
     end
 
     context "when blocks model has on block" do
-      let(:blocks) { [ [ [ { mass: 12.0 } ]]] }
+      let(:blocks) { [ [ [ { mass: 12.0 } ] ] ] }
 
       it "reblocked model has one block, when rx=ry=rz=1" do
+        block_model.reblock(1, 1, 1)
+        expect(block_model.blocks).to eq blocks
+      end
+    end
+
+    context "when blocks model is 2x2x2" do
+      let(:blocks) do
+        [
+          [
+            [{mass: 1}, {mass: 1}],
+            [{mass: 1}, {mass: 1}],
+          ],
+          [
+            [{mass: 1}, {mass: 1}],
+            [{mass: 1}, {mass: 1}],
+          ]
+        ]
+      end
+
+      it "reblocked model has original blocks, when rx=ry=rz=1" do
         block_model.reblock(1, 1, 1)
         expect(block_model.blocks).to eq blocks
       end

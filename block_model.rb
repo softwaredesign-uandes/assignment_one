@@ -24,12 +24,14 @@ class BlockModel
     n_j = 0
     n_k = 0
     for i in (0..@blocks.length - 1).step(rx)
+      n_j = 0
       for j in (0..@blocks[0].length - 1).step(ry)
+        n_k = 0
         for k in (0..@blocks[0][0].length - 1).step(rz)
           n = {}
-          for ri in (i..rx-1)
-            for rj in (i..ry-1)
-              for rk in (i..rx-1)
+          for ri in (i..(i + rx-1))
+            for rj in (j..(j +ry-1))
+              for rk in (k..(k + rz-1))
                 @blocks[ri][rj][rk].each do |k__, v|
                   unless n.include? k__
                     n[k__] = 0
