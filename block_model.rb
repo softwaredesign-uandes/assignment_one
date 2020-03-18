@@ -8,13 +8,13 @@ class BlockModel
   def reblock(rx, ry, rz)
     new_blocks = []
     nx = @blocks.length / rx
-    ny = @blocks.length[0] / ry
-    nz = @blocks.length[0][0] / rz
-    for i in (0..nx)
+    ny = nx == 0 ? 0 : @blocks[0].length / ry
+    nz = ny == 0 ? 0 : @blocks[0][0].length / rz
+    for i in (0..nx - 1)
       new_blocks[i] = []
-      for j in (0..ny)
+      for j in (0..ny - 1)
         new_blocks[i][j] = []
-        for k in (0..nz)
+        for k in (0..nz - 1)
           new_blocks[i][j][k] = {}
         end
       end
@@ -55,18 +55,3 @@ class BlockModel
     @blocks = new_blocks
   end
 end
-
-blocks =
-[
-  [
-    [{mass: 1}, {mass: 1}],
-    [{mass: 1}, {mass: 1}],
-  ],
-  [
-    [{mass: 1}, {mass: 1}],
-    [{mass: 1}, {mass: 1}],
-  ]
-]
-
-bm = BlockModel.new(blocks)
-bm.reblock(2,2,2)
