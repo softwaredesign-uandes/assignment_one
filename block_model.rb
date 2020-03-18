@@ -70,4 +70,3 @@ blocks =
 
 bm = BlockModel.new(blocks)
 bm.reblock(2,2,2)
-puts bm.blocks
