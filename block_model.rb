@@ -20,21 +20,7 @@ class BlockModel
       for j in (0..@blocks[0].length - 1).step(ry)
         n_k = 0
         for k in (0..@blocks[0][0].length - 1).step(rz)
-          n = {}
-          for ri in (i..(i + rx-1))
-            for rj in (j..(j +ry-1))
-              for rk in (k..(k + rz-1))
-                @blocks[ri][rj][rk].each do |k__, v|
-                  unless n.include? k__
-                    n[k__] = 0
-                  end
-                  n[k__] += v
-                end
-              end
-            end
-          end
-
-          new_blocks[n_i][n_j][n_k] = n
+          new_blocks[n_i][n_j][n_k] = reblock_neighbour_blocks(i,j,k,rx,ry,rz)
           n_k += 1
         end
         n_j += 1
@@ -45,6 +31,24 @@ class BlockModel
   end
 
   private
+
+  def reblock_neighbour_blocks(first_block_x_index, first_block_y_index, first_block_z_index,
+    reblock_factor_x, reblock_factor_y, reblock_factor_z)
+    new_block = {}
+    for r_x in (first_block_x_index..(first_block_x_index + reblock_factor_x-1))
+      for r_y in (first_block_y_index..(first_block_y_index +reblock_factor_y-1))
+        for r_z in (first_block_z_index..(first_block_z_index + reblock_factor_z-1))
+          @blocks[r_x][r_y][r_z].each do |key, value|
+            unless new_block.include? key
+              new_block[key] = 0
+            end
+            new_block[key] += value
+          end
+        end
+      end
+    end
+    new_block
+  end
 
   def initialize_empty_blocks(number_of_x_blocks, number_of_y_blocks, number_of_z_blocks)
     new_blocks = []
