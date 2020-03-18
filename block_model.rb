@@ -6,19 +6,11 @@ class BlockModel
   end
 
   def reblock(rx, ry, rz)
-    new_blocks = []
     nx = @blocks.length / rx
     ny = nx == 0 ? 0 : @blocks[0].length / ry
     nz = ny == 0 ? 0 : @blocks[0][0].length / rz
-    for i in (0..nx - 1)
-      new_blocks[i] = []
-      for j in (0..ny - 1)
-        new_blocks[i][j] = []
-        for k in (0..nz - 1)
-          new_blocks[i][j][k] = {}
-        end
-      end
-    end
+    
+    new_blocks = initialize_empty_blocks(nx, ny, nz)
 
     n_i = 0
     n_j = 0
@@ -50,5 +42,21 @@ class BlockModel
       n_i += 1
     end
     @blocks = new_blocks
+  end
+
+  private
+
+  def initialize_empty_blocks(number_of_x_blocks, number_of_y_blocks, number_of_z_blocks)
+    new_blocks = []
+    for i in (0..number_of_x_blocks - 1)
+      new_blocks[i] = []
+      for j in (0..number_of_y_blocks - 1)
+        new_blocks[i][j] = []
+        for k in (0..number_of_z_blocks - 1)
+          new_blocks[i][j][k] = {}
+        end
+      end
+    end
+    new_blocks
   end
 end
