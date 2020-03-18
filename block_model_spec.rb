@@ -36,9 +36,20 @@ RSpec.describe BlockModel do
         ]
       end
 
-      it "reblocked model has original blocks, when rx=ry=rz=1" do
-        block_model.reblock(1, 1, 1)
-        expect(block_model.blocks).to eq blocks
+      context "when rx=ry=rz=1" do
+        it "reblocked model has original blocks" do
+          block_model.reblock(1, 1, 1)
+          expect(block_model.blocks).to eq blocks
+        end
+      end
+
+      context "when rx=ry=rz=2" do
+        let(:expected_blocks) { [[[{ mass:8 }]]] }
+
+        it "reblocked model has original blocks" do
+          block_model.reblock(2, 2, 2)
+          expect(block_model.blocks).to eq expected_blocks
+        end
       end
     end
   end

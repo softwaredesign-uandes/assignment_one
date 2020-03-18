@@ -42,12 +42,7 @@ class BlockModel
             end
           end
 
-          n_2 = {}
-          n.each do |k_,v|
-            n_2[k_] = v / (rx * ry * rz)
-          end
-
-          new_blocks[n_i][n_j][n_k] = n_2
+          new_blocks[n_i][n_j][n_k] = n
           n_k += 1
         end
         n_j += 1
