@@ -68,10 +68,10 @@ RSpec.describe BlockModel do
       ]
     end
 
-    let(:expected_groups) { { [0,0,0] => blocks }  }
+    let(:expected_blocks) { [{ mass: 8, x: 0, y: 0, z: 0 }] }
 
-    it "returns expected groups" do
-      expect(block_model.reblock_no_fors(blocks, 2, 2, 2)).to eq(expected_groups)
+    it "returns expected blocks" do
+      expect(block_model.reblock_no_fors(blocks, 2, 2, 2)).to eq(expected_blocks)
     end
   end
 end
