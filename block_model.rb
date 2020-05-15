@@ -5,6 +5,10 @@ class BlockModel
     @blocks = blocks
   end
 
+  def reblock_no_fors(blocks, rx, ry, rz)
+    groups = blocks.group_by { |b| [(b[:x] / rx).to_i , (b[:y] / ry).to_i , (b[:z] / rz).to_i] }
+  end
+
   def reblock(rx, ry, rz)
     nx = @blocks.length / rx
     ny = nx == 0 ? 0 : @blocks[0].length / ry
