@@ -6,8 +6,9 @@ class BlockModel
   end
 
   def reblock_no_fors(blocks, rx, ry, rz)
-    groups = blocks.group_by { |b| [(b[:x] / rx).to_i , (b[:y] / ry).to_i , (b[:z] / rz).to_i] }
-    blocks = groups.map { |indices, group_blocks| { x: indices[0], y: indices[1], z: indices[2], mass: group_blocks.sum {|b| b[:mass] } } }
+    blocks
+      .group_by { |block| [(block[:x] / rx).to_i , (block[:y] / ry).to_i , (block[:z] / rz).to_i] }
+      .map { |indices, group_blocks| { x: indices[0], y: indices[1], z: indices[2], mass: group_blocks.sum {|block| block[:mass] } } }
   end
 
   def reblock(rx, ry, rz)

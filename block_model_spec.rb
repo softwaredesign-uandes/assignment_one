@@ -55,23 +55,56 @@ RSpec.describe BlockModel do
   end
 
   describe "reblock_no_fors" do
-    let(:blocks) do
-      [
-        { mass: 1, x: 0, y: 0, z: 0},
-        { mass: 1, x: 0, y: 0, z: 1},
-        { mass: 1, x: 0, y: 1, z: 0},
-        { mass: 1, x: 0, y: 1, z: 1},
-        { mass: 1, x: 1, y: 0, z: 0},
-        { mass: 1, x: 1, y: 0, z: 1},
-        { mass: 1, x: 1, y: 1, z: 0},
-        { mass: 1, x: 1, y: 1, z: 1},
-      ]
+    context "with 2x2x2 complete model" do
+      let(:blocks) do
+        [
+          { mass: 1, x: 0, y: 0, z: 0},
+          { mass: 1, x: 0, y: 0, z: 1},
+          { mass: 1, x: 0, y: 1, z: 0},
+          { mass: 1, x: 0, y: 1, z: 1},
+          { mass: 1, x: 1, y: 0, z: 0},
+          { mass: 1, x: 1, y: 0, z: 1},
+          { mass: 1, x: 1, y: 1, z: 0},
+          { mass: 1, x: 1, y: 1, z: 1},
+        ]
+      end
+
+      context "when reblocked 2x2x2" do
+        let(:expected_blocks) { [{ mass: 8, x: 0, y: 0, z: 0 }] }
+
+        it "returns expected blocks" do
+          expect(block_model.reblock_no_fors(blocks, 2, 2, 2)).to eq(expected_blocks)
+        end
+      end
+
+      context "when reblocked 2x2x1" do
+        let(:expected_blocks) { [{ mass: 4, x: 0, y: 0, z: 0 }, { mass: 4, x: 0, y: 0, z: 1 }] }
+
+        it "returns expected blocks" do
+          expect(block_model.reblock_no_fors(blocks, 2, 2, 1)).to eq(expected_blocks)
+        end
+      end
     end
 
-    let(:expected_blocks) { [{ mass: 8, x: 0, y: 0, z: 0 }] }
+    context "with 2x2x2 incomplete model" do
+      let(:blocks) do
+        [
+          { mass: 1, x: 0, y: 0, z: 0},
+          { mass: 1, x: 0, y: 1, z: 0},
+          { mass: 1, x: 0, y: 1, z: 1},
+          { mass: 1, x: 1, y: 0, z: 0},
+          { mass: 1, x: 1, y: 1, z: 0},
+          { mass: 1, x: 1, y: 1, z: 1},
+        ]
+      end
 
-    it "returns expected blocks" do
-      expect(block_model.reblock_no_fors(blocks, 2, 2, 2)).to eq(expected_blocks)
+      context "when reblocked 2x2x2" do
+        let(:expected_blocks) { [{ mass: 6, x: 0, y: 0, z: 0 }] }
+
+        it "returns expected blocks" do
+          expect(block_model.reblock_no_fors(blocks, 2, 2, 2)).to eq(expected_blocks)
+        end
+      end
     end
   end
 end
